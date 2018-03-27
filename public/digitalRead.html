@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!-- Canvas animation based on https://www.kirupa.com/snippets/examples/simple_canvas_animation.htm -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>PATIENT FILES by SENSE(LET)</title>
+<style>
+canvas {
+	font: panama; border: 3px #CCC solid;
+}
+</style>
+</head>
+
+<body>
+<img id="image" src="assets/white.jpg">
+
+<div id="container">
+	
+</div>
+
+<div id="image">
+
+<!-- <img src = "assets/white.jpg" alt="trying show when magnet is off">
+<img src = "assets/sample.jpg" alt="trying show when magnet is on"> -->
+
+
+</div>
+
+
+<script src = "/socket.io/socket.io.js"></script>
+<script> 
+	var socket = io.connect('http://localhost:8080');
+	// var radius;
+	// var mappedRadius;
+
+	//var bool = "true";
+
+
+// 	function myFunction() {
+// 	var x = document.createElement("image");
+// 	x.setAttribute("src", "sample.jpg");
+// 	x.setAttribute("width", "304");
+// 	x.setAttribute("height", "228");
+// 	x.setAttribute("alt", "trying to show when magnet is on");
+// 	document.body.appendChild(x);
+// }
+	
+	socket.on('messages', function (data){
+		//parsing your values into integers
+		digitalRead = parseInt(data.serialValue);
+
+// if (img.attr("src") === "assets/white.jpg") {
+//   img.fadeOut(1000, function() {
+//      img.attr("src", "sample.jpg").fadeIn(1000);
+
+
+		if (digitalRead == 0){
+			//document.getElementById("container").innerHTML = "OFF";
+			document.getElementById("image").src = "assets/white.jpg";
+
+		}else if(digitalRead == 1){
+			//document.getElementById("container").innerHTML = "ON";
+			document.getElementById("image").src = "assets/sample.jpg";
+		}
+
+		socket.emit('getSerialVal'); 
+	});
+		
+    </script>
+
+
+</body></html>
